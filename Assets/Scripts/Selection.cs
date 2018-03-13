@@ -7,6 +7,8 @@ public class Selection : MonoBehaviour
 {
     private GameObject[] tribeSelection;
     private int selectIndex = 0;
+    private Color altColor;
+   
 
     private void Start()
     {
@@ -37,9 +39,39 @@ public class Selection : MonoBehaviour
         tribeSelection[selectIndex].SetActive(true);
       
     }
+
+    public void PlayerButton(int playerNumber)
+    {
+       if(playerNumber == 0)
+        {
+            tribeSelection[selectIndex].SetActive(true);
+            altColor = Color.red;
+
+            return;
+        }
+       else if(playerNumber == 1)
+        {
+            tribeSelection[selectIndex].SetActive(true);
+            altColor = Color.blue;
+        }
+       else if (playerNumber == 2)
+        {
+            tribeSelection[selectIndex].SetActive(true);
+            altColor = Color.green;
+        }
+        else if (playerNumber == 3)
+        {
+            tribeSelection[selectIndex].SetActive(true);
+            altColor = Color.yellow;
+        }
+        else
+        {
+            return;
+        }
+    }
     public void PlayButton(int sceneIndex)
     {
-        PlayerPrefs.SetInt("CharacterSelected", selectIndex);
+        DontDestroyOnLoad(this.gameObject);
         SceneManager.LoadScene(sceneIndex);
     }
 }
