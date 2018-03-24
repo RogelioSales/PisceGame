@@ -31,7 +31,11 @@ public class GameManager : MonoBehaviour
     public Text messagePlayerN;
     public GameObject tribePrefab;
     public PlayerControl[] players;
-    [HideInInspector]public bool numPlayersAlive = false;
+    GameObject[] player1;
+    GameObject[] player2;
+    GameObject[] player3;
+    GameObject[] player4;
+
 
     private int roundNumber;
     private WaitForSeconds startWait;
@@ -43,6 +47,10 @@ public class GameManager : MonoBehaviour
     {
         startWait = new WaitForSeconds(startDelay);
         endWait = new WaitForSeconds(endDelay);
+        player1= GameObject.FindGameObjectsWithTag("Player1");
+        player2 = GameObject.FindGameObjectsWithTag("Player2");
+        player3 = GameObject.FindGameObjectsWithTag("Player3");
+        player4 = GameObject.FindGameObjectsWithTag("Player4");
         SpawnAllPlayer();
         StartCoroutine(GameLoop());
     }
@@ -75,75 +83,56 @@ public class GameManager : MonoBehaviour
     }
     private IEnumerator RoundStarting()
     {
-        ResetAllPlayers();
-        DisablePlayerControl();
+      //  ResetAllPlayers();
+       // DisablePlayerControl();
         roundNumber++;
         messagePlayerN.text = "1";
         messageRound.text = "DAY" + roundNumber;
+
 
         yield return startWait;
     }
     private IEnumerator RoundPlaying()
     {
-        EnablePlayerControl();
+      //  EnablePlayerControl();
         messageRound.text = string.Empty;
-        while (numPlayersAlive == false)
-        {
-            yield return null;
-        }
+       // while ()
+        //{
+           yield return null;
+      //  }
     }
     private IEnumerator RoundEnding()
     {
-        DisablePlayerControl();
-        daySurvivors = null;
-        daySurvivors = GetRoundWinner();
-        if (daySurvivors != null)
-            daySurvivors.survived++;
-        fullSurvivors = GetGameWinner();
-        string message = EndMessage();
-        messageRound.text = message;
+     //   DisablePlayerControl();
+      //  daySurvivors = null;
+       // daySurvivors = GetRoundWinner();
+       // if (daySurvivors != null)
+        //    daySurvivors.survived++;
+        //fullSurvivors = GetGameWinner();
+       // string message = EndMessage();
+       // messageRound.text = message;
         yield return endWait;
     }
     private void EnablePlayerControl()
     {
-        for (int i = 0; i < players.Length; i++)
-        {
-            players[i].EnableControl();
-        }
+       
     }
-
     private void DisablePlayerControl()
     {
-        for (int i = 0; i < players.Length; i++)
-        {
-            players[i].DisableControl();
-        }
+
     }
 
     private void ResetAllPlayers()
     {
-        for (int i = 0; i < players.Length; i++)
-        {
-            players[i].Reset();
-        }
+        
     }
-    private PlayerControl GetRoundWinner()
+    private void GetRoundWinner()
     {
-        for (int i = 0; i < players.Length; i++)
-        {
-            if (players[i].pInstance.activeSelf)
-                return players[i];
-        }
-        return null;
+       
     }
-    private PlayerControl GetGameWinner()
+    private void GetGameWinner()
     {
-        for (int i = 0; i < players.Length; i++)
-        {
-            if (players[i].survived == numOfRounds)
-                return players[i];
-        }
-        return null;
+      
     }
     private string EndMessage()
     {
@@ -165,43 +154,21 @@ public class GameManager : MonoBehaviour
     }
 
     public void EndButton()
-    {     
-        int numOfPlayersLeft = 0;
-        for (int i = 0; i < players.Length; i++)
+    {
+        if(player1.Length == 6)
         {
-            Debug.Log("Working");
-            Debug.Log(numOfPlayersLeft);
-            if (players[i  ].playerNumber == 1)
-            {
-                numOfPlayersLeft++;
-                players[i].playerNumber++;
-                messagePlayerN.text = "2";
-                Debug.Log("Works");
-            }
-            else if(players[i].playerNumber == 2)
-            {
-                numOfPlayersLeft++;
-                players[i].playerNumber++;
-                messagePlayerN.text = "3";
-            }
-            else if(players[i].playerNumber == 3)
-            {
-                numOfPlayersLeft++;
-                players[i].playerNumber++;
-                messagePlayerN.text = "4";
-            }
-            else if(players[i].playerNumber == 4)
-            {
-                numOfPlayersLeft++;
-                players[i].playerNumber = 1;
-                messagePlayerN.text = "1";
-            }               
+            messagePlayerN.text = "2";
+            player2[6].SetActive(true);
+            player1[6].SetActive(false);
+          
         }
-        if(numOfPlayersLeft == 4)
+        else if (player2 != null)
         {
-            numPlayersAlive = true;
+            messagePlayerN.text = "3";
+            player2[6].SetActive(false);
+            player3[6].SetActive(true);
         }
-        
+
     }
 }
 

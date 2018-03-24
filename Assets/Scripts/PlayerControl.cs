@@ -41,10 +41,5 @@ public class PlayerControl
     }
     public void Reset()
     {
-        pInstance.transform.position = spawnPoint.position;
-        pInstance.transform.rotation = spawnPoint.rotation;
-
-        pInstance.SetActive(false);
-        pInstance.SetActive(true);
     }
 }
